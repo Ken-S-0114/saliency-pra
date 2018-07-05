@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "ofxCv.h"
-//#include <opencv2/saliency/saliencyBaseClasses.hpp>
-//#include <opencv2/saliency/saliencySpecializedClasses.hpp>
+#include <opencv2/saliency/saliencyBaseClasses.hpp>
+#include <opencv2/saliency/saliencySpecializedClasses.hpp>
 
 //--------------------------------------------------------------
 void ofApp::setup(){

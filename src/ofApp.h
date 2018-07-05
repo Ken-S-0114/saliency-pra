@@ -24,6 +24,6 @@ public:
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
   
-//  cv::Mat image, saliencyMap;
-//  std::string saliency_algorithm = "FINE_GRAINED";
+  cv::Mat image, saliencyMap;
+  std::string saliency_algorithm = "FINE_GRAINED";
 };
