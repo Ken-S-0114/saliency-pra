@@ -28,8 +28,8 @@ public:
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
 
-  ofImage inputOfImg, outputOfImg;
-  Mat image, saliencyMap;
+  ofImage inputOfImg, outputOfImg, outputOfImg2;
+  Mat image, saliencyMap, binaryMap;
   string saliency_algorithm = "FINE_GRAINED";
   
 };

@@ -9,16 +9,27 @@ using namespace saliency;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+  
+  // 画像の読み込み
   inputOfImg.load("test.jpg");
   inputOfImg.update();
   
+  // Mat変換
   image = ofxCv::toCv(inputOfImg);
+  
+  // SPECTRAL_RESIDUAL(顕著性マップを求めるアルゴリズム)
   Ptr<StaticSaliencySpectralResidual> saliencyAlgorithm = StaticSaliencySpectralResidual::create();
-//  cv::Ptr<Saliency> saliencyAlgorithm = Saliency::create( saliency_algorithm );
-  saliencyAlgorithm->computeSaliency( image, saliencyMap );
+  
+  // 変換
+  if (saliencyAlgorithm->computeSaliency( image, saliencyMap )) {
+    // SPECTRAL_RESIDUAL(バイナリマップ)
+    StaticSaliencySpectralResidual spec;
+    spec.computeBinaryMap( saliencyMap, binaryMap );
+  }
 
   ofxCv::toOf(saliencyMap, outputOfImg);
-
+  ofxCv::toOf(binaryMap, outputOfImg2);
+  
 }
 
 //--------------------------------------------------------------
@@ -29,7 +40,9 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-  outputOfImg.draw(0,0);
+  inputOfImg.draw(0, 0, 200, 200);
+  outputOfImg.draw(200, 0, 200, 200);
+  outputOfImg2.draw(400, 0, 200, 200);
 }
 
 //--------------------------------------------------------------
