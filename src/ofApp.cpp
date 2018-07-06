@@ -1,11 +1,24 @@
 #include "ofApp.h"
 #include "ofxCv.h"
-#include <opencv2/saliency/saliencyBaseClasses.hpp>
-#include <opencv2/saliency/saliencySpecializedClasses.hpp>
+#include "opencv/cv.h"
+#include "saliencySpecializedClasses.hpp"
+
+using namespace std;
+using namespace cv;
+using namespace saliency;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-//  image = cv::imread("test.png");
+  inputOfImg.load("test.jpg");
+  inputOfImg.update();
+  
+  image = ofxCv::toCv(inputOfImg);
+  Ptr<StaticSaliencySpectralResidual> saliencyAlgorithm = StaticSaliencySpectralResidual::create();
+//  cv::Ptr<Saliency> saliencyAlgorithm = Saliency::create( saliency_algorithm );
+  saliencyAlgorithm->computeSaliency( image, saliencyMap );
+
+  ofxCv::toOf(saliencyMap, outputOfImg);
+
 }
 
 //--------------------------------------------------------------
@@ -16,10 +29,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-//  cv::Ptr<cv::saliency::Saliency> saliencyAlgorithm =
-//      cv::saliency::Saliency::create( saliency_algorithm );
-//  saliencyAlgorithm->computeSaliency( image, saliencyMap );
-
+  outputOfImg.draw(0,0);
 }
 
 //--------------------------------------------------------------

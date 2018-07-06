@@ -3,10 +3,14 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 #include "ofxCv.h"
+#include "saliencySpecializedClasses.hpp"
 
+using namespace std;
+using namespace cv;
+using namespace saliency;
 
 class ofApp : public ofBaseApp {
-  
+
 public:
   void setup();
   void update();
@@ -23,7 +27,9 @@ public:
   void windowResized(int w, int h);
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
+
+  ofImage inputOfImg, outputOfImg;
+  Mat image, saliencyMap;
+  string saliency_algorithm = "FINE_GRAINED";
   
-  cv::Mat image, saliencyMap;
-  std::string saliency_algorithm = "FINE_GRAINED";
 };
