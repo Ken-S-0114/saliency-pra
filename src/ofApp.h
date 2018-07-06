@@ -30,6 +30,8 @@ public:
 
   ofImage inputOfImg, outputOfImg, outputOfImg2;
   Mat image, saliencyMap, binaryMap;
+  
   string saliency_algorithm = "FINE_GRAINED";
+  
   
 };

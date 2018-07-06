@@ -15,24 +15,32 @@ void ofApp::setup(){
   inputOfImg.update();
   
   // Mat変換
-  image = ofxCv::toCv(inputOfImg);
+  image = ofxCv::toCv( inputOfImg );
   
   // SPECTRAL_RESIDUAL(顕著性マップを求めるアルゴリズム)
   Ptr<StaticSaliencySpectralResidual> saliencyAlgorithm = StaticSaliencySpectralResidual::create();
   
-  // 顕著性マップに変換
-  saliencyAlgorithm->computeSaliency( image, saliencyMap );
-  
+  //------------------------------------------------------------
+//  // 顕著性マップに変換
+//  saliencyAlgorithm->computeSaliency( image, saliencyMap );
+//  ofxCv::toOf( saliencyMap, outputOfImg );
+  //------------------------------------------------------------
   // 顕著性マップに変換
   if (saliencyAlgorithm->computeSaliency( image, saliencyMap )) {
+
+//    Mat saliencyMap_copy = saliencyMap.clone();
+
     // SPECTRAL_RESIDUAL(バイナリマップ)
     StaticSaliencySpectralResidual spec;
     spec.computeBinaryMap( saliencyMap, binaryMap );
+
+    // 画像(ofImage)に変換
+    ofxCv::toOf( saliencyMap, outputOfImg );
+//    outputOfImg.update();
+    ofxCv::toOf( binaryMap, outputOfImg2 );
+    outputOfImg2.update();
   }
 
-  // 画像(ofImage)に変換
-  ofxCv::toOf(saliencyMap, outputOfImg);
-  ofxCv::toOf(binaryMap, outputOfImg2);
   
 }
 
@@ -44,9 +52,9 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   // 出力
-  inputOfImg.draw(0, 0, 200, 200);
-  outputOfImg.draw(200, 0, 200, 200);
-  outputOfImg2.draw(400, 0, 200, 200);
+  inputOfImg.draw( 0, 0, 200, 200 );
+  outputOfImg.draw( 200, 0, 200, 200 );
+  outputOfImg2.draw( 400, 0, 200, 200 );
 }
 
 //--------------------------------------------------------------
