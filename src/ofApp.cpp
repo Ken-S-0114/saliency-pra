@@ -16,14 +16,14 @@ void ofApp::setup(){
   inputOfImg.update();
   
   // 動画の読み込み
-//  ofBackground(255,255,255);
-//  ofSetVerticalSync(true);
+  ofBackground(255,255,255);
+  ofSetVerticalSync(true);
   player.load("test.mp4");
   player.play();
   
   // Mat変換
   image = ofxCv::toCv( inputOfImg );
-  
+  cvtColor(image, image, COLOR_BGR2GRAY);
   // 顕著性マップ(SPECTRAL_RESIDUAL)に変換
   if (saliencyAlgorithm_SPECTRAL_RESIDUAL->computeSaliency( image, saliencyMap_SPECTRAL_RESIDUAL )) {
     
@@ -41,14 +41,36 @@ void ofApp::setup(){
   if (saliencyAlgorithm_FINE_GRAINED->computeSaliency( image, saliencyMap_FINE_GRAINED )) {
     // 画像(ofImage)に変換
     ofxCv::toOf( saliencyMap_FINE_GRAINED, outputOfImg3 );
-    //    outputOfImg3.update();
+    outputOfImg3.update();
   }
+  
+  // 顕著性マップ(BinWangApr2014)の設定
+  ofPixelsRef p = player.getPixels();
+  Mat m = ofxCv::toCv(p);
+  saliencyAlgorithm_BinWangApr2014.dynamicCast<MotionSaliencyBinWangApr2014>()->setImagesize( m.cols, m.rows );
+  saliencyAlgorithm_BinWangApr2014.dynamicCast<MotionSaliencyBinWangApr2014>()->init();
   
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
   player.update();
+  
+  if(player.isFrameNew()){
+    ofPixelsRef pix = player.getPixels();
+    Mat mat = ofxCv::toCv(pix).clone();
+    
+    cvtColor(mat, mat, COLOR_BGR2GRAY);
+    //--------------------------------------------------------------
+    ofxCv::toOf( mat, outputOfImg4 );
+    //--------------------------------------------------------------
+//    Mat saliencyMap_BinWangApr2014;
+//    saliencyAlgorithm_BinWangApr2014->computeSaliency( mat, saliencyMap_BinWangApr2014 );
+//    ofxCv::toOf( saliencyMap_BinWangApr2014 * 255, outputOfImg4 );
+    //--------------------------------------------------------------
+    outputOfImg4.update();
+  }
+  
 }
 
 //--------------------------------------------------------------
@@ -59,6 +81,7 @@ void ofApp::draw(){
   outputOfImg2.draw( 500, 0, 250, 300 );
   outputOfImg3.draw( 750, 0, 250, 300 );
   player.draw(0, 300, 500, 300);
+  outputOfImg4.draw( 500, 300, 500, 300 );
 }
 
 //--------------------------------------------------------------

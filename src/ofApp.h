@@ -32,20 +32,23 @@ public:
   // 画像
   ofImage inputOfImg;
 
+  // 動画
+  ofVideoPlayer player;
+  
   // 出力データ
   ofImage outputOfImg, outputOfImg2, outputOfImg3;
+  ofImage outputOfImg4;
   
   // 画像関連のデータ
   Mat image;
   Mat saliencyMap_SPECTRAL_RESIDUAL, binaryMap_SPECTRAL_RESIDUAL;
   Mat saliencyMap_FINE_GRAINED, binaryMap_FINE_GRAINED;
   
-  // 動画関連のデータ
-  ofVideoPlayer player;
-  
-  // SPECTRAL_RESIDUAL(顕著性マップを求めるアルゴリズム)
+  // SPECTRAL_RESIDUAL(顕著性マップを求めるアルゴリズム : 画像)
   Ptr<StaticSaliencySpectralResidual> saliencyAlgorithm_SPECTRAL_RESIDUAL = StaticSaliencySpectralResidual::create();
-  // FINE_GRAINED(顕著性マップを求めるアルゴリズム)
+  // FINE_GRAINED(顕著性マップを求めるアルゴリズム : 画像)
   Ptr<StaticSaliencyFineGrained> saliencyAlgorithm_FINE_GRAINED = StaticSaliencyFineGrained::create();
 
+  // BinWangApr2014(顕著性マップを求めるアルゴリズム : 動画)
+  Ptr<MotionSaliencyBinWangApr2014> saliencyAlgorithm_BinWangApr2014 = MotionSaliencyBinWangApr2014::create();
 };
