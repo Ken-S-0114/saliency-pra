@@ -28,10 +28,19 @@ public:
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
 
-  ofImage inputOfImg, outputOfImg, outputOfImg2;
-  Mat image, saliencyMap, binaryMap;
+  // 元データ
+  ofImage inputOfImg;
+  // 出力データ
+  ofImage outputOfImg, outputOfImg2, outputOfImg3;
   
-  string saliency_algorithm = "FINE_GRAINED";
+  // 画像関連のデータ
+  Mat image;
+  Mat saliencyMap_SPECTRAL_RESIDUAL, binaryMap_SPECTRAL_RESIDUAL;
+  Mat saliencyMap_FINE_GRAINED, binaryMap_FINE_GRAINED;
   
-  
+  // SPECTRAL_RESIDUAL(顕著性マップを求めるアルゴリズム)
+  Ptr<StaticSaliencySpectralResidual> saliencyAlgorithm_SPECTRAL_RESIDUAL = StaticSaliencySpectralResidual::create();
+  // FINE_GRAINED(顕著性マップを求めるアルゴリズム)
+  Ptr<StaticSaliencyFineGrained> saliencyAlgorithm_FINE_GRAINED = StaticSaliencyFineGrained::create();
+
 };

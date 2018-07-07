@@ -2,6 +2,7 @@
 #include "ofxCv.h"
 #include "opencv/cv.h"
 #include "saliencySpecializedClasses.hpp"
+#include "opencv2/highgui.hpp"
 
 using namespace std;
 using namespace cv;
@@ -17,30 +18,25 @@ void ofApp::setup(){
   // Mat変換
   image = ofxCv::toCv( inputOfImg );
   
-  // SPECTRAL_RESIDUAL(顕著性マップを求めるアルゴリズム)
-  Ptr<StaticSaliencySpectralResidual> saliencyAlgorithm = StaticSaliencySpectralResidual::create();
-  
-  //------------------------------------------------------------
-//  // 顕著性マップに変換
-//  saliencyAlgorithm->computeSaliency( image, saliencyMap );
-//  ofxCv::toOf( saliencyMap, outputOfImg );
-  //------------------------------------------------------------
-  // 顕著性マップに変換
-  if (saliencyAlgorithm->computeSaliency( image, saliencyMap )) {
-
-//    Mat saliencyMap_copy = saliencyMap.clone();
+  // 顕著性マップ(SPECTRAL_RESIDUAL)に変換
+  if (saliencyAlgorithm_SPECTRAL_RESIDUAL->computeSaliency( image, saliencyMap_SPECTRAL_RESIDUAL )) {
 
     // SPECTRAL_RESIDUAL(バイナリマップ)
     StaticSaliencySpectralResidual spec;
-    spec.computeBinaryMap( saliencyMap, binaryMap );
+    spec.computeBinaryMap( saliencyMap_SPECTRAL_RESIDUAL, binaryMap_SPECTRAL_RESIDUAL );
 
     // 画像(ofImage)に変換
-    ofxCv::toOf( saliencyMap, outputOfImg );
-//    outputOfImg.update();
-    ofxCv::toOf( binaryMap, outputOfImg2 );
+    ofxCv::toOf( saliencyMap_SPECTRAL_RESIDUAL, outputOfImg );
+    ofxCv::toOf( binaryMap_SPECTRAL_RESIDUAL, outputOfImg2 );
     outputOfImg2.update();
   }
-
+  
+  // 顕著性マップ(FINE_GRAINED)に変換
+  if (saliencyAlgorithm_FINE_GRAINED->computeSaliency( image, saliencyMap_FINE_GRAINED )) {
+    // 画像(ofImage)に変換
+    ofxCv::toOf( saliencyMap_FINE_GRAINED, outputOfImg3 );
+//    outputOfImg3.update();
+  }
   
 }
 
@@ -52,9 +48,10 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   // 出力
-  inputOfImg.draw( 0, 0, 200, 200 );
-  outputOfImg.draw( 200, 0, 200, 200 );
-  outputOfImg2.draw( 400, 0, 200, 200 );
+  inputOfImg.draw( 0, 0, 250, 250 );
+  outputOfImg.draw( 0, 250, 250, 250 );
+  outputOfImg2.draw( 250, 250, 250, 250 );
+  outputOfImg3.draw( 0, 500, 250, 250 );
 }
 
 //--------------------------------------------------------------
