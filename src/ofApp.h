@@ -4,6 +4,7 @@
 #include "ofxOpenCv.h"
 #include "ofxCv.h"
 #include "saliencySpecializedClasses.hpp"
+#include "opencv2/highgui.hpp"
 
 using namespace std;
 using namespace cv;
@@ -28,8 +29,9 @@ public:
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
 
-  // 元データ
+  // 画像
   ofImage inputOfImg;
+
   // 出力データ
   ofImage outputOfImg, outputOfImg2, outputOfImg3;
   
@@ -37,6 +39,9 @@ public:
   Mat image;
   Mat saliencyMap_SPECTRAL_RESIDUAL, binaryMap_SPECTRAL_RESIDUAL;
   Mat saliencyMap_FINE_GRAINED, binaryMap_FINE_GRAINED;
+  
+  // 動画関連のデータ
+  ofVideoPlayer player;
   
   // SPECTRAL_RESIDUAL(顕著性マップを求めるアルゴリズム)
   Ptr<StaticSaliencySpectralResidual> saliencyAlgorithm_SPECTRAL_RESIDUAL = StaticSaliencySpectralResidual::create();
