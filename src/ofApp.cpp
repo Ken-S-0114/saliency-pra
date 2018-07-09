@@ -48,19 +48,21 @@ void ofApp::update(){
   player.update();
   
   if(player.isFrameNew()){
+    // 1フレームを取得
     ofPixelsRef pix = player.getPixels();
+    // Mat変換
     Mat mat = ofxCv::toCv(pix).clone();
-    
+    // 白黒加工
     cvtColor(mat, mat, COLOR_BGR2GRAY);
-    //--------------------------------------------------------------
+    // 画像(ofImage)に変換
     ofxCv::toOf( mat, outputOfImg4 );
-    //--------------------------------------------------------------
+    outputOfImg4.update();
+    // 顕著性マップ(BinWangApr2014)に変換
     Mat saliencyMap_BinWangApr2014;
     saliencyAlgorithm_BinWangApr2014->computeSaliency( mat.clone(), saliencyMap_BinWangApr2014 );
 //    imshow( "saliencyMap", saliencyMap_BinWangApr2014 * 255 );
     ofxCv::toOf( saliencyMap_BinWangApr2014, outputOfImg5 );
-    //--------------------------------------------------------------
-    outputOfImg4.update();
+
     outputOfImg5.update();
   }
   
@@ -68,11 +70,12 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-  // 出力
+  // 出力（画像）
   inputOfImg.draw( 0, 0, 250, 300 );
   outputOfImg.draw( 250, 0, 250, 300 );
   outputOfImg2.draw( 500, 0, 250, 300 );
   outputOfImg3.draw( 750, 0, 250, 300 );
+  // 出力（動画）
   player.draw(0, 300, 300, 200);
   outputOfImg4.draw( 300, 300, 300, 200 );
   outputOfImg5.draw( 600, 300, 300, 200 );
