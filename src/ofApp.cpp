@@ -1,12 +1,4 @@
 #include "ofApp.h"
-#include "ofxCv.h"
-#include "opencv/cv.h"
-#include "saliencySpecializedClasses.hpp"
-#include "opencv2/highgui.hpp"
-
-using namespace std;
-using namespace cv;
-using namespace saliency;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -49,7 +41,6 @@ void ofApp::setup(){
   Mat m = ofxCv::toCv(p);
   saliencyAlgorithm_BinWangApr2014.dynamicCast<MotionSaliencyBinWangApr2014>()->setImagesize( m.cols, m.rows );
   saliencyAlgorithm_BinWangApr2014.dynamicCast<MotionSaliencyBinWangApr2014>()->init();
-  
 }
 
 //--------------------------------------------------------------
@@ -66,9 +57,11 @@ void ofApp::update(){
     //--------------------------------------------------------------
 //    Mat saliencyMap_BinWangApr2014;
 //    saliencyAlgorithm_BinWangApr2014->computeSaliency( mat, saliencyMap_BinWangApr2014 );
-//    ofxCv::toOf( saliencyMap_BinWangApr2014 * 255, outputOfImg4 );
+//    imshow( "saliencyMap", saliencyMap_BinWangApr2014 * 255 );
+//    ofxCv::toOf( saliencyMap_BinWangApr2014, outputOfImg5 );
     //--------------------------------------------------------------
     outputOfImg4.update();
+    outputOfImg5.update();
   }
   
 }
@@ -80,8 +73,9 @@ void ofApp::draw(){
   outputOfImg.draw( 250, 0, 250, 300 );
   outputOfImg2.draw( 500, 0, 250, 300 );
   outputOfImg3.draw( 750, 0, 250, 300 );
-  player.draw(0, 300, 500, 300);
-  outputOfImg4.draw( 500, 300, 500, 300 );
+  player.draw(0, 300, 300, 200);
+  outputOfImg4.draw( 300, 300, 300, 200 );
+  outputOfImg5.draw( 600, 300, 300, 200 );
 }
 
 //--------------------------------------------------------------

@@ -5,6 +5,8 @@
 #include "ofxCv.h"
 #include "saliencySpecializedClasses.hpp"
 #include "opencv2/highgui.hpp"
+#include <iostream>
+#include "opencv2/core/core.hpp"
 
 using namespace std;
 using namespace cv;
@@ -37,7 +39,7 @@ public:
   
   // 出力データ
   ofImage outputOfImg, outputOfImg2, outputOfImg3;
-  ofImage outputOfImg4;
+  ofImage outputOfImg4, outputOfImg5;
   
   // 画像関連のデータ
   Mat image;
