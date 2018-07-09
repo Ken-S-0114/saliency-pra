@@ -44,8 +44,11 @@ public:
   
   // 画像関連のデータ
   Mat image;
+  
+  // 顕著性マップ
   Mat saliencyMap_SPECTRAL_RESIDUAL, binaryMap_SPECTRAL_RESIDUAL;
-  Mat saliencyMap_FINE_GRAINED, binaryMap_FINE_GRAINED;
+  Mat saliencyMap_FINE_GRAINED;
+  Mat saliencyMap_BinWangApr2014;
   
   // SPECTRAL_RESIDUAL(顕著性マップを求めるアルゴリズム : 画像)
   Ptr<StaticSaliencySpectralResidual> saliencyAlgorithm_SPECTRAL_RESIDUAL = StaticSaliencySpectralResidual::create();
