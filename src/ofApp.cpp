@@ -55,10 +55,10 @@ void ofApp::update(){
     //--------------------------------------------------------------
     ofxCv::toOf( mat, outputOfImg4 );
     //--------------------------------------------------------------
-//    Mat saliencyMap_BinWangApr2014;
-//    saliencyAlgorithm_BinWangApr2014->computeSaliency( mat, saliencyMap_BinWangApr2014 );
+    Mat saliencyMap_BinWangApr2014;
+    saliencyAlgorithm_BinWangApr2014->computeSaliency( mat.clone(), saliencyMap_BinWangApr2014 );
 //    imshow( "saliencyMap", saliencyMap_BinWangApr2014 * 255 );
-//    ofxCv::toOf( saliencyMap_BinWangApr2014, outputOfImg5 );
+    ofxCv::toOf( saliencyMap_BinWangApr2014, outputOfImg5 );
     //--------------------------------------------------------------
     outputOfImg4.update();
     outputOfImg5.update();

@@ -37,8 +37,9 @@ public:
   // 動画
   ofVideoPlayer player;
   
-  // 出力データ
+  // 出力データ（元画像, SPECTRAL_RESIDUAL, FINE_GRAINED）
   ofImage outputOfImg, outputOfImg2, outputOfImg3;
+  // 出力データ（白黒動画, BinWangApr2014）
   ofImage outputOfImg4, outputOfImg5;
   
   // 画像関連のデータ
