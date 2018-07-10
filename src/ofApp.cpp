@@ -62,8 +62,8 @@ void ofApp::update(){
     // 白黒加工
     cvtColor( mat, mat, COLOR_BGR2GRAY );
     // 画像(ofImage)に変換
-    ofxCv::toOf( mat, outputOfImg4 );
-    outputOfImg4.update();
+//    ofxCv::toOf( mat, outputOfImg4 );
+//    outputOfImg4.update();
     
     // 顕著性マップ(BinWangApr2014)に変換
 //    saliencyAlgorithm_BinWangApr2014->computeSaliency( mat.clone(), saliencyMap_BinWangApr2014 );
@@ -85,7 +85,7 @@ void ofApp::update(){
     // Matの型（ビット深度）を変換する
     saliencyMap_BinWangApr2014_2.convertTo( saliencyMap_BinWangApr2014_3, CV_8UC3 );
     ofLog()<<"Matの型 : "<<(double)saliencyMap_BinWangApr2014_3.at<double>(0,0);
-    ofxCv::toOf( saliencyMap_BinWangApr2014_3, outputOfImg5 );
+//    ofxCv::toOf( saliencyMap_BinWangApr2014_3, outputOfImg5 );
     
   }
   
@@ -94,19 +94,21 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   // 出力（画像）
-  inputOfImg.draw( 0, 0, 250, 300 );
-  outputOfImg.draw( 250, 0, 250, 300 );
-  outputOfImg2.draw( 500, 0, 250, 300 );
-  outputOfImg3.draw( 750, 0, 250, 300 );
+  inputOfImg.draw( 0, 50, 250, 300 );
+  outputOfImg.draw( 250, 50, 250, 300 );
+  outputOfImg2.draw( 500, 50, 250, 300 );
+  outputOfImg3.draw( 750, 50, 250, 300 );
 
   // 出力（動画）
-  player.draw(0, 300, 350, 250);
-  outputOfImg4.draw( 350, 300, 350, 250 );
+  player.draw( 0, 350, 500, 350);
+//  outputOfImg4.draw( 400, 350, 400, 300 );
 
   // 顕著性マップ(BinWangApr2014)を出力
-  ofxCv::drawMat(saliencyMap_BinWangApr2014_3, 700, 300, 350, 250);
+//  ofxCv::drawMat( saliencyMap_BinWangApr2014_3, 800, 350, 450, 350 );
+  ofxCv::drawMat(saliencyMap_BinWangApr2014_3, 500, 350, 500, 350);
 //  outputOfImg5.save("output.jpg");
   
+  // FPS表示
   ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()), 20, 20);
 
 }
