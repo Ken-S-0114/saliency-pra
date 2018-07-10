@@ -50,7 +50,8 @@ public:
   Mat saliencyMap_FINE_GRAINED;
   
   Mat saliencyMap_BinWangApr2014;
-  Mat saliencyMap_BinWangApr2014_2;
+  Mat saliencyMap_BinWangApr2014_2,
+  saliencyMap_BinWangApr2014_3;
   // SPECTRAL_RESIDUAL(顕著性マップを求めるアルゴリズム : 画像)
   Ptr<StaticSaliencySpectralResidual> saliencyAlgorithm_SPECTRAL_RESIDUAL = StaticSaliencySpectralResidual::create();
   // FINE_GRAINED(顕著性マップを求めるアルゴリズム : 画像)
