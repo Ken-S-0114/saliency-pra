@@ -65,11 +65,15 @@ void ofApp::update(){
     outputOfImg4.update();
     
     // 顕著性マップ(BinWangApr2014)に変換
-    saliencyAlgorithm_BinWangApr2014->computeSaliency( mat.clone(), saliencyMap_BinWangApr2014 );
+//    saliencyAlgorithm_BinWangApr2014->computeSaliency( mat.clone(), saliencyMap_BinWangApr2014 );
+    
+    saliencyAlgorithm_FINE_GRAINED->computeSaliency( mat.clone(), saliencyMap_BinWangApr2014 );
+    
     ofLog()<<"saliencyMap_BinWangApr2014_cols : "<<saliencyMap_BinWangApr2014.cols;
     ofLog()<<"saliencyMap_BinWangApr2014_rows : "<<saliencyMap_BinWangApr2014.rows;
     ofLog() << saliencyMap_BinWangApr2014.type();
     ofLog()<<"BinWangApr2014 : "<<(int)saliencyMap_BinWangApr2014.at<uchar>(0,0);
+    
 //    ofxCv::toOf( saliencyMap_BinWangApr2014, outputOfImg5 );
 //    outputOfImg5.update();
     
@@ -84,6 +88,7 @@ void ofApp::update(){
     //saliencyMap_BinWangApr2014_2.convertTo( saliencyMap_BinWangApr2014_3, CV_8UC3 );
     //ofLog()<<"Matの型 : "<<(double)saliencyMap_BinWangApr2014_3.at<double>(0,0);
 //    ofxCv::toOf( saliencyMap_BinWangApr2014_3, outputOfImg5 );
+    
   }
   
 }
@@ -103,6 +108,8 @@ void ofApp::draw(){
   // 顕著性マップ(BinWangApr2014)を出力
   ofxCv::drawMat(saliencyMap_BinWangApr2014_2, 600, 300, 300, 200);
 //  outputOfImg5.save("output.jpg");
+  
+  ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()), 20, 20);
 
 }
 
