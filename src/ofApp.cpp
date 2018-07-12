@@ -61,30 +61,25 @@ void ofApp::update(){
     Mat mat = ofxCv::toCv(player).clone();
     // 白黒加工
     cvtColor( mat, mat, COLOR_BGR2GRAY );
-    // 画像(ofImage)に変換
-//    ofxCv::toOf( mat, outputOfImg4 );
-//    outputOfImg4.update();
     
     // 顕著性マップ(BinWangApr2014)に変換
 //    saliencyAlgorithm_BinWangApr2014->computeSaliency( mat.clone(), saliencyMap_BinWangApr2014 );
     
     saliencyAlgorithm_SPECTRAL_RESIDUAL->computeSaliency( mat.clone(), saliencyMap_BinWangApr2014 );
     
-    ofLog()<<"saliencyMap_BinWangApr2014_cols : "<<saliencyMap_BinWangApr2014.cols;
-    ofLog()<<"saliencyMap_BinWangApr2014_rows : "<<saliencyMap_BinWangApr2014.rows;
+    ofLog()<<"saliencyMap_BinWangApr2014_cols : "<< saliencyMap_BinWangApr2014.cols;
+    ofLog()<<"saliencyMap_BinWangApr2014_rows : "<< saliencyMap_BinWangApr2014.rows;
     ofLog()<<"saliencyMap_BinWangApr2014_type : "<< saliencyMap_BinWangApr2014.type();
     ofLog()<<"BinWangApr2014_at : "<<(int)saliencyMap_BinWangApr2014.at<uchar>(0,0);
     
-//    saliencyMap_BinWangApr2014_2 = saliencyMap_BinWangApr2014 * 255;
-    
     // アルファチャンネルの正規化を行う
-    normalize( saliencyMap_BinWangApr2014.clone(), saliencyMap_BinWangApr2014_2, 0.0, 255.0, NORM_MINMAX);
+    normalize( saliencyMap_BinWangApr2014.clone(), saliencyMap_BinWangApr2014_norm, 0.0, 255.0, NORM_MINMAX);
     
-    ofLog()<<"正規化 : "<<(int)saliencyMap_BinWangApr2014_2.at<uchar>(0,0);
+    ofLog()<<"正規化 : "<<(int)saliencyMap_BinWangApr2014_norm.at<uchar>(0,0);
     
     // Matの型（ビット深度）を変換する
-    saliencyMap_BinWangApr2014_2.convertTo( saliencyMap_BinWangApr2014_3, CV_8UC3 );
-    ofLog()<<"Matの型 : "<<(double)saliencyMap_BinWangApr2014_3.at<double>(0,0);
+    saliencyMap_BinWangApr2014_norm.convertTo( saliencyMap_BinWangApr2014_conv, CV_8UC3 );
+    ofLog()<<"Matの型 : "<<(double)saliencyMap_BinWangApr2014_conv.at<double>(0,0);
 //    ofxCv::toOf( saliencyMap_BinWangApr2014_3, outputOfImg5 );
     
   }
@@ -101,11 +96,11 @@ void ofApp::draw(){
 
   // 出力（動画）
   player.draw( 0, 350, 500, 350);
-//  outputOfImg4.draw( 400, 350, 400, 300 );
 
   // 顕著性マップ(BinWangApr2014)を出力
-//  ofxCv::drawMat( saliencyMap_BinWangApr2014_3, 800, 350, 450, 350 );
-  ofxCv::drawMat(saliencyMap_BinWangApr2014_3, 500, 350, 500, 350);
+//  ofxCv::drawMat( saliencyMap_BinWangApr2014_conv, 500, 350, 500, 350 );
+  ofxCv::drawMat(saliencyMap_BinWangApr2014_conv, 500, 350, 500, 350);
+  
 //  outputOfImg5.save("output.jpg");
   
   // FPS表示
